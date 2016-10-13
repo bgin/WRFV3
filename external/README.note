@@ -1,0 +1,10 @@
+#note added at 2016-10-13 by ikarosaber
+This directory contains :
+
+1.subroutines for the implementations of I/O API for supported data formats (GRIB1,GRIB2,binary,netcdf,etc.);
+
+2.RSL_LITE directory to build communications layer(DM_PARALLEL only);
+
+3.external/esmf_time_f90 directory to build ESMF time manager library;
+
+4.fftpack directory to build FFT library for the global filters.
