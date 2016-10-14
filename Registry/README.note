@@ -1,0 +1,18 @@
+#This file contains notes about the WRF Registry.Some are directly copied from the website below.
+#for more details, refer to http://www2.mmm.ucar.edu/wrf/WG2/Tigers/Registry/
+#note added at 2016-10-14, by ikarosaber
+
+#The registry automatically generates sections of code that would be the most error-prone and effort intensive to manage by hand: 
+
+#code to declare, allocate, and initialize state data; 
+#generating dummy argument lists and their declarations, as well as actual argument lists used when passing state data between subroutines at the interface between layers in the WRF software architecture (driver, mediation, and model layers); 
+#generating calls to routines for initial (first guess), restart, history and boundary I/O for selected state data fields; 
+#generating halo-exchange, periodic boundary updates, transpose, and nesting communications for selected state data fields in selected patterns;
+#generating code that defines, sets defaults for, inputs, broadcasts among processors, and makes available to the code the variable=value (namelist) information used to configure the running application; etc.
+
+#Adding or modifying a state variable to a model involves modifying a single line of a single file. The registry provides a single point of control -- the registry data base -- for making changes that affect many different aspects of the code.
+
+#The Registry program is distributed as part of WRF in the tools directory. 
+#It is built automatically (if necessary) when WRF is compiled.
+#The executable file is tools/registry. This program reads the contents of the Registry file, Registry/Registry, and generates files in the inc directory. 
+#These include files are inserted (with cpp #include commands) into WRF Fortran sourcefiles prior to compilation.
