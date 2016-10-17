@@ -1,4 +1,5 @@
 !WRF:DRIVER_LAYER:DOMAIN_OBJECT
+! note added at 2016-10-17 by ikarosaber
 MODULE module_domain_type
 
    USE module_driver_constants
