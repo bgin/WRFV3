@@ -359,7 +359,7 @@ IF ( grid%active_this_task ) THEN
 ENDIF
 
             grid_ptr => grid
-            DO WHILE ( ASSOCIATED( grid_ptr ) )
+            DO WHILE ( ASSOCIATED( grid_ptr ) ) ! let's deal with the nests.
                DO kid = 1, max_nests
                  IF ( ASSOCIATED( grid_ptr%nests(kid)%ptr ) ) THEN
                    CALL set_current_grid_ptr( grid_ptr%nests(kid)%ptr )
@@ -372,7 +372,7 @@ ENDIF
                    grid_ptr%nests(kid)%ptr%stop_subtime = &
                      domain_get_current_time(grid)
                  ENDIF
-               ENDDO
+               ENDDO ! clock set for all direct nests of the parent grid.
 
                DO kid = 1, max_nests
                  IF ( ASSOCIATED( grid_ptr%nests(kid)%ptr ) ) THEN
@@ -410,8 +410,8 @@ ENDIF
                ENDIF
 #endif
                IF (coupler_on) CALL cpl_snd( grid_ptr ) 
-               grid_ptr => grid_ptr%sibling
-            END DO
+               grid_ptr => grid_ptr%sibling !the head grid should have no siblings.
+            END DO  ! Associated(grid_ptr)
             CALL set_current_grid_ptr( grid )
             !  Report on the timing for a single time step.
             IF ( wrf_dm_on_monitor() ) THEN
@@ -429,8 +429,8 @@ IF ( grid%active_this_task ) THEN
                CALL end_timing ( TRIM(message) )
 ENDIF ! active_this_task
             ENDIF
-            CALL med_endup_step ( grid , config_flags )
-         END DO
+            CALL med_endup_step ( grid , config_flags ) ! turn off the restart flag after the first mother-domain step is finished
+         END DO ! .NOT. domain_clockisstopsubtime(grid)
 
 IF ( grid%active_this_task ) THEN
          ! Accumulation calculation for DFI
