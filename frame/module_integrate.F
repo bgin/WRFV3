@@ -321,7 +321,7 @@ IF ( grid%active_this_task ) THEN
                ENDIF
                IF (coupler_on) CALL cpl_defdomain( new_nest ) 
 ENDIF ! active_this_task
-            END DO
+            END DO ! nests_to_open 
             IF ( a_nest_was_opened ) THEN
                CALL set_overlaps ( grid )   ! find overlapping and set pointers
             END IF
@@ -379,7 +379,7 @@ ENDIF
                    CALL set_current_grid_ptr( grid_ptr%nests(kid)%ptr )
                    WRITE(message,*)grid%id,' module_integrate: recursive call to integrate '
                    CALL wrf_debug( 100 , message )
-                      CALL integrate ( grid_ptr%nests(kid)%ptr ) 
+                      CALL integrate ( grid_ptr%nests(kid)%ptr ) ! this subroutine is called again to do the same for nests of the head_grid
                    WRITE(message,*)grid%id,' module_integrate: back from recursive call to integrate '
                    CALL wrf_debug( 100 , message )
                  ENDIF
